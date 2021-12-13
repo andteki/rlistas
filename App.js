@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
 import {useState} from 'react';
 
 
@@ -11,6 +11,15 @@ export default function App() {
     {name: 'Rotes Imre', city: 'Szeged'},
     {name: 'Hentes Gábor', city: 'Miskolc'},
   ]);
+  const url = 'http://localhost:3000/employees';
+  function handleFetchButton() {
+    fetch(url)
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+    });
+  }
+
   function renderItem({item}) {
     return (
       <View>
@@ -22,6 +31,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Lista</Text>
+      <Button title="Letölt" onPress={handleFetchButton} />
+      
       <FlatList 
 	      data={employees}
 	      renderItem={renderItem}
